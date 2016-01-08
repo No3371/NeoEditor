@@ -20,16 +20,10 @@ namespace NeoEditor
 
         private void TabSidebar_Load(object sender, EventArgs e)
         {
-            index[1] += 1;
-            Tabs.Add(new FileTabs(index[1] + 1, false, "New File", true, System.IO.Path.GetTempPath() + Guid.NewGuid().ToString(), newTab(), newClosing()));
-            refreshView(index[1]);
-
+            AddATab();
         }
 
-        Color Black87 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
-        Color MainLimeGreen = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(231)))), ((int)(((byte)(118)))));
-
-        #region Icon Add_Event
+        #region Icon Add_Events
         private void pictureBox1_MouseEnter(object sender, EventArgs e)
         {
             Icon_Add.Image = Properties.Resources.Icon_Add_Active;
@@ -42,15 +36,15 @@ namespace NeoEditor
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            index[1] += 1;
-            Tabs.Add(new FileTabs(index[1] + 1, false, "New File", true, System.IO.Path.GetTempPath() + Guid.NewGuid().ToString(), newTab(), newClosing()));
-            refreshView(index[1]);
+            AddATab();
         }
 
         #endregion
 
-        List<FileTabs> Tabs = new List<FileTabs>();
+        public static Color Black87 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+        public static Color MainLimeGreen = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(231)))), ((int)(((byte)(118)))));
 
+        TabOrganizer tO = new TabOrganizer(new List<FileTabs>(), new List<Tab_Buttons>()); 
 
         private Button newTab()
         {
@@ -60,12 +54,13 @@ namespace NeoEditor
             newBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             newBtn.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             newBtn.ForeColor = System.Drawing.Color.White;
-            newBtn.Location = new System.Drawing.Point(0, index[1] * 30 + 2);
-            newBtn.Name = "Tab" + (index[1]).ToString();
+            newBtn.Location = new System.Drawing.Point(0, tO.Tabs.Count * 30 + 2);
+            newBtn.Name = "Tab" + (tO.Tabs.Count).ToString();
             newBtn.Size = new System.Drawing.Size(this.Width-30, 30);
             newBtn.Text = "New File";
             newBtn.UseVisualStyleBackColor = false;
             newBtn.Click += Tab_Click;
+            newBtn.Tag = tO.Tabs.Count;
 
             this.Controls.Add(newBtn);
 
@@ -82,14 +77,15 @@ namespace NeoEditor
             newBtn.FlatAppearance.MouseDownBackColor = Black87;
             newBtn.FlatAppearance.BorderColor = MainLimeGreen;
             newBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            newBtn.Location = new System.Drawing.Point(this.Left + this.Width - 30, this.Top + index[1] * 30 + 2);
-            newBtn.Name = "CloseTab" + (index[1]).ToString();
+            newBtn.Location = new System.Drawing.Point(this.Left + this.Width - 30, this.Top + tO.Tabs.Count * 30 + 2);
+            newBtn.Name = "CloseTab" + (tO.Tabs.Count).ToString();
             newBtn.Size = new System.Drawing.Size(30, 30);
             newBtn.UseVisualStyleBackColor = false;
             newBtn.Click += Close_Click;
             newBtn.MouseEnter += CloseTab_MouseEnter;
             newBtn.MouseLeave += CloseTab_MouseLeave;
             newBtn.BringToFront();
+            newBtn.Tag = tO.Tabs.Count;
 
             this.Controls.Add(newBtn);
 
@@ -98,77 +94,148 @@ namespace NeoEditor
 
         private void refreshView(int newFocus)
         {
-            if (index[0] > -1)
+            Organize();
+            if (tO.Buttons.Count-1>=tO.Focus)
             {
-                Tabs[index[0]].tab.BackColor = Black87;
-                Tabs[index[0]].tab.FlatAppearance.BorderColor = Black87;
-                Tabs[index[0]].close.BackColor = Black87;
-                Tabs[index[0]].close.FlatAppearance.BorderColor = Black87;
+                tO.Buttons[tO.Focus].outOfFocused();
             }
-            Tabs[newFocus].tab.BackColor = MainLimeGreen;
-            Tabs[newFocus].close.BackColor = MainLimeGreen;
-            Tabs[newFocus].tab.FlatAppearance.BorderColor = MainLimeGreen;
-            Tabs[newFocus].close.FlatAppearance.BorderColor = MainLimeGreen;
-            index[0] = newFocus;
+            if (newFocus >= 0)
+            {
+                tO.Buttons[newFocus].Focused();
+            }
+            tO.Focus = newFocus;
 
         }
-
-        int[] index = new int[2] { -1, -1 };
         
-
-        struct FileTabs
+        private void Organize()
         {
+            for (int i = 0; i < tO.Tabs.Count; i++)
+            {
+                tO.Buttons[i].reAssign(i, tO.Tabs[i].getName());
+                tO.Buttons[i].reLocate();
+            }
+        }
 
+        struct TabOrganizer
+        {
+            public int Focus;
+            public List<FileTabs> Tabs;
+            public List<Tab_Buttons> Buttons;
+
+            public TabOrganizer(List<FileTabs> Tabs, List<Tab_Buttons> Buttons){
+                this.Focus = 0;
+                this.Tabs = Tabs;
+                this.Buttons = Buttons;
+            }
+        }
+
+        struct Tab_Buttons
+        {
             public int index;
-            bool ifEdited;
-            string name;
-            bool ifFocused;
-            string filePath;
             public Button tab;
             public Button close;
 
-            public FileTabs(int index, bool ifedited, string name, bool iffocsed, string filepath, Button tab, Button close){
+            public Tab_Buttons(Button tab, Button close, int index)
+            {
                 this.index = index;
-                this.ifEdited = ifedited;
-                this.ifFocused = iffocsed;
-                this.name = name;
-                this.filePath = filepath;
                 this.tab = tab;
                 this.close = close;
             }
 
-            public void ATabClosed(){
-                index -= 1;
+            public void reLocate()
+            {
+                tab.Location = new System.Drawing.Point(0, index * 30 + 2);
+                close.Location = new System.Drawing.Point(tab.Width, index * 30 + 2);
             }
+
+            public void reAssign(int index, string text){
+                this.index = index;
+                tab.Text = text;
+                tab.Tag = index;
+                close.Tag = index;
+            }
+
+            public void disposing()
+            {
+                tab.Dispose();
+                close.Dispose();
+            }
+
+            public void Focused()
+            {
+                tab.BackColor = MainLimeGreen;
+                tab.FlatAppearance.BorderColor = MainLimeGreen;
+                close.BackColor = MainLimeGreen;
+                close.FlatAppearance.BorderColor = MainLimeGreen;
+                
+            }
+
+            public void outOfFocused()
+            {
+                tab.BackColor = Black87;
+                tab.FlatAppearance.BorderColor = Black87;
+                close.BackColor = Black87;
+                close.FlatAppearance.BorderColor = Black87;
+            }
+
+            
+
+
+        }
+
+        struct FileTabs
+        {
+            bool ifEdited;
+            string name;
+            bool ifFocused;
+            string filePath;
+
+            public FileTabs(bool ifedited, string name, bool iffocsed, string filepath){
+                this.ifEdited = ifedited;
+                this.ifFocused = iffocsed;
+                this.name = name;
+                this.filePath = filepath;
+            }
+
+            public string getName(){
+                return name;
+            }
+        }
+
+        private void AddATab()
+        {
+            tO.Buttons.Add(new Tab_Buttons(newTab(), newClosing(), tO.Tabs.Count));
+            tO.Tabs.Add(new FileTabs(false, "New File", true, System.IO.Path.GetTempPath() + Guid.NewGuid().ToString()));
+            refreshView(tO.Tabs.Count - 1);
         }
 
         private void CloseATab(int index)
         {
-            this.index[1] -= 1;
-            if(this.index[0] == index) refreshView(this.index[0] - 1);
-            foreach(FileTabs ft in Tabs){
-                ft.ATabClosed();
-                ft.tab.Name = "Tab" + ft.index;
-                ft.close.Name = "CloseTab" + ft.index;
+            if (index == tO.Focus)
+            {
+                tO.Focus -= 1;
             }
-            Tabs[index].tab.Dispose();
-            Tabs[index].close.Dispose();
-            Tabs.RemoveAt(index);
+            if (index <= tO.Focus)
+            {
+                tO.Focus -= 1;
+            }
+            tO.Buttons[index].disposing();
+            tO.Tabs.RemoveAt(index);
+            tO.Buttons.RemoveAt(index);
+            refreshView(tO.Focus);
         }
 
         #region TabButton_Event
         private void Tab_Click(object sender, EventArgs e)
         {
             Button tempbtn = (Button)sender; 
-            int index = int.Parse(tempbtn.Name.Replace("Tab", ""));
-            refreshView(index);
+            refreshView((int)tempbtn.Tag);
         }
 
         private void Close_Click(object sender, EventArgs e)
         {
             Button tempbtn = (Button)sender;
-            int index = int.Parse(tempbtn.Name.Replace("CloseTab", ""));
-            CloseATab(index);
+            CloseATab((int)tempbtn.Tag);
         }
 
         private void CloseTab_MouseEnter(object sender, EventArgs e)
