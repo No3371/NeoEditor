@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.RTX = new System.Windows.Forms.RichTextBox();
-            this.tabSidebar = new NeoEditor.TabSidebar();
+            this.tabSidebar = new NeoEditor.TabSidebar(this);
             this.SuspendLayout();
             // 
             // RTX

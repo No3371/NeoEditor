@@ -12,10 +12,12 @@ namespace NeoEditor
 {
     public partial class TabSidebar : UserControl
     {
+        Form1 MainForm;
 
-        public TabSidebar()
+        public TabSidebar(Form1 f)
         {
             InitializeComponent();
+            MainForm = f;
         }
 
         private void TabSidebar_Load(object sender, EventArgs e)
@@ -44,213 +46,222 @@ namespace NeoEditor
         public static Color Black87 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
         public static Color MainLimeGreen = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(231)))), ((int)(((byte)(118)))));
 
-        TabOrganizer tO = new TabOrganizer(new List<FileTabs>(), new List<Tab_Buttons>()); 
+        TabOrganizer tO = new TabOrganizer(); 
 
-        private Button newTab()
-        {
-            Button newBtn = new Button();
-            newBtn.BackColor = MainLimeGreen;
-            newBtn.FlatAppearance.BorderColor = MainLimeGreen;
-            newBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            newBtn.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            newBtn.ForeColor = System.Drawing.Color.White;
-            newBtn.Location = new System.Drawing.Point(0, tO.Tabs.Count * 30 + 2);
-            newBtn.Name = "Tab" + (tO.Tabs.Count).ToString();
-            newBtn.Size = new System.Drawing.Size(this.Width-30, 30);
-            newBtn.Text = "New File";
-            newBtn.UseVisualStyleBackColor = false;
-            newBtn.Click += Tab_Click;
-            newBtn.Tag = tO.Tabs.Count;
 
-            this.Controls.Add(newBtn);
-
-            return newBtn;
-        }
-
-        private Button newClosing()
-        {
-            Button newBtn = new Button();
-            newBtn.BackColor = MainLimeGreen;
-            newBtn.BackgroundImage = Properties.Resources.Button_CloseTab;
-            newBtn.BackgroundImageLayout = ImageLayout.Center;
-            newBtn.FlatAppearance.MouseOverBackColor = Black87;
-            newBtn.FlatAppearance.MouseDownBackColor = Black87;
-            newBtn.FlatAppearance.BorderColor = MainLimeGreen;
-            newBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            newBtn.Location = new System.Drawing.Point(this.Left + this.Width - 30, this.Top + tO.Tabs.Count * 30 + 2);
-            newBtn.Name = "CloseTab" + (tO.Tabs.Count).ToString();
-            newBtn.Size = new System.Drawing.Size(30, 30);
-            newBtn.UseVisualStyleBackColor = false;
-            newBtn.Click += Close_Click;
-            newBtn.MouseEnter += CloseTab_MouseEnter;
-            newBtn.MouseLeave += CloseTab_MouseLeave;
-            newBtn.BringToFront();
-            newBtn.Tag = tO.Tabs.Count;
-
-            this.Controls.Add(newBtn);
-
-            return newBtn;
-        }
 
         private void refreshView(int newFocus)
         {
-            Organize();
-            if (tO.Buttons.Count-1>=tO.Focus)
-            {
-                tO.Buttons[tO.Focus].outOfFocused();
-            }
+            tO.Tabs[tO.Focus].Buttons.outOfFocused();
             if (newFocus >= 0)
             {
                 tO.Buttons[newFocus].Focused();
             }
             tO.Focus = newFocus;
+            MainForm.Debug_RTX(tO.Focus, tO.Buttons.Count, tO.Buttons[tO.Focus].tab.Location.Y, tO.Buttons[tO.Focus].index);
 
-        }
-        
+        }        
         private void Organize()
         {
             for (int i = 0; i < tO.Tabs.Count; i++)
             {
-                tO.Buttons[i].reAssign(i, tO.Tabs[i].getName());
+                tO.Buttons[i].reAssign(i);
                 tO.Buttons[i].reLocate();
             }
         }
 
-        struct TabOrganizer
+        private class TabOrganizer
         {
             public int Focus;
             public List<FileTabs> Tabs;
-            public List<Tab_Buttons> Buttons;
+            public FileTabs RefCurrent;
+            TabSidebar ParentTS;
 
-            public TabOrganizer(List<FileTabs> Tabs, List<Tab_Buttons> Buttons){
+            public TabOrganizer(TabSidebar ParentTS){
+                NewFile();
                 this.Focus = 0;
-                this.Tabs = Tabs;
-                this.Buttons = Buttons;
+                this.Tabs = new List<FileTabs>();
+                this.RefCurrent = Tabs[0];
+                this.ParentTS = ParentTS;
             }
-        }
 
-        struct Tab_Buttons
-        {
-            public int index;
-            public Button tab;
-            public Button close;
-
-            public Tab_Buttons(Button tab, Button close, int index)
+            private void CloseAFile(int index)
             {
-                this.index = index;
-                this.tab = tab;
-                this.close = close;
+                //Decide the focus to move up or down
+                //It should always move to the one above the tab which is being closed
+                //Unless the closing one is the first tab
+
             }
 
-            public void reLocate()
+            private void NewFile()
             {
-                tab.Location = new System.Drawing.Point(0, index * 30 + 2);
-                close.Location = new System.Drawing.Point(tab.Width, index * 30 + 2);
+                Tabs.Add(new FileTabs(false, "New File", true, System.IO.Path.GetTempPath() + Guid.NewGuid().ToString(), ParentTS));
             }
 
-            public void reAssign(int index, string text){
-                this.index = index;
-                tab.Text = text;
-                tab.Tag = index;
-                close.Tag = index;
-            }
 
-            public void disposing()
+            private class Tab_Buttons
             {
-                tab.Dispose();
-                close.Dispose();
+                public Button tab;
+                public Button close;
+                TabOrganizer ParentTO;
+
+                public Tab_Buttons(TabOrganizer ParentTO)
+                {
+                    this.tab = newTab();
+                    this.close = newClosing();
+                    this.ParentTO = ParentTO;
+                }
+
+                public void reLocate(int index)
+                {
+                    tab.Location = new System.Drawing.Point(0, index * 30);
+                    close.Location = new System.Drawing.Point(tab.Width, index * 30);
+                }
+
+                //A (int) tag is assign to the buttons, which indicate the slot they currently located at
+                public void AssignTag(int index)
+                {
+                    tab.Tag = index;
+                    close.Tag = index;
+                    reLocate(index);
+                }
+
+
+                private Button newTab()
+                {
+                    Button newBtn = new Button();
+                    newBtn.BackColor = MainLimeGreen;
+                    newBtn.FlatAppearance.BorderColor = MainLimeGreen;
+                    newBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+                    newBtn.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+                    newBtn.ForeColor = System.Drawing.Color.White;
+                    newBtn.Location = new System.Drawing.Point(0, ParentTO.Tabs.Count * 30);
+                    newBtn.Name = "Tab" + (ParentTO.Tabs.Count).ToString();
+                    newBtn.Size = new System.Drawing.Size(ParentTO.ParentTS.Width - 30, 30);
+                    newBtn.Text = "New File";
+                    newBtn.UseVisualStyleBackColor = false;
+                    newBtn.Click += Tab_Click;
+                    newBtn.Tag = ParentTO.Tabs.Count;
+
+                    ParentTO.ParentTS.Controls.Add(newBtn);
+
+                    return newBtn;
+                }
+                private Button newClosing()
+                {
+                    Button newBtn = new Button();
+                    newBtn.BackColor = MainLimeGreen;
+                    newBtn.BackgroundImage = Properties.Resources.Button_CloseTab;
+                    newBtn.BackgroundImageLayout = ImageLayout.Center;
+                    newBtn.FlatAppearance.MouseOverBackColor = Black87;
+                    newBtn.FlatAppearance.MouseDownBackColor = Black87;
+                    newBtn.FlatAppearance.BorderColor = MainLimeGreen;
+                    newBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+                    newBtn.Location = new System.Drawing.Point(ParentTO.ParentTS.Width - 30, ParentTO.Tabs.Count * 30);
+                    newBtn.Name = "CloseTab" + (ParentTO.Tabs.Count).ToString();
+                    newBtn.Size = new System.Drawing.Size(30, 30);
+                    newBtn.UseVisualStyleBackColor = false;
+                    newBtn.Click += Close_Click;
+                    newBtn.MouseEnter += CloseTab_MouseEnter;
+                    newBtn.MouseLeave += CloseTab_MouseLeave;
+                    newBtn.BringToFront();
+                    newBtn.Tag = ParentTO.Tabs.Count;
+
+                    ParentTO.ParentTS.Controls.Add(newBtn);
+
+                    return newBtn;
+                }
+
+
+                #region TabButton_Event
+                private void Tab_Click(object sender, EventArgs e)
+                {
+                    Button tempbtn = (Button)sender;
+                    tS.refreshView((int)tempbtn.Tag);
+                }
+
+                private void Close_Click(object sender, EventArgs e)
+                {
+                    Button tempbtn = (Button)sender;
+                    tS.CloseATab((int)tempbtn.Tag);
+                }
+
+                private void CloseTab_MouseEnter(object sender, EventArgs e)
+                {
+                    Button tempbtn = (Button)sender;
+                    tempbtn.BackgroundImage = Properties.Resources.Button_CloseTab_MouseOver;
+                }
+
+                private void CloseTab_MouseLeave(object sender, EventArgs e)
+                {
+                    Button tempbtn = (Button)sender;
+                    tempbtn.BackgroundImage = Properties.Resources.Button_CloseTab;
+                }
+
+                #endregion
+
+                public void disposing()
+                {
+                    tab.Dispose();
+                    close.Dispose();
+                }
+
+                public void Focused()
+                {
+                    tab.BackColor = MainLimeGreen;
+                    tab.FlatAppearance.BorderColor = MainLimeGreen;
+                    close.BackColor = MainLimeGreen;
+                    close.FlatAppearance.BorderColor = MainLimeGreen;
+
+                }
+
+                public void outOfFocused()
+                {
+                    tab.BackColor = Black87;
+                    tab.FlatAppearance.BorderColor = Black87;
+                    close.BackColor = Black87;
+                    close.FlatAppearance.BorderColor = Black87;
+                }
+
+
+
+
             }
 
-            public void Focused()
+            private class FileTabs
             {
-                tab.BackColor = MainLimeGreen;
-                tab.FlatAppearance.BorderColor = MainLimeGreen;
-                close.BackColor = MainLimeGreen;
-                close.FlatAppearance.BorderColor = MainLimeGreen;
-                
+                bool ifEdited;
+                string name;
+                public bool ifFocused;
+                string filePath;
+                Tab_Buttons Buttons;
+                TabSidebar tS;
+
+                public FileTabs(bool ifedited, string name, bool iffocsed, string filepath, TabSidebar tS)
+                {
+                    this.ifEdited = ifedited;
+                    this.ifFocused = iffocsed;
+                    this.name = name;
+                    this.filePath = filepath;
+                    this.Buttons = new Tab_Buttons(newTab(), newClosing());
+                    this.tS = tS;
+                }
+
+                public string getName()
+                {
+                    return name;
+                }
+
+
             }
 
-            public void outOfFocused()
-            {
-                tab.BackColor = Black87;
-                tab.FlatAppearance.BorderColor = Black87;
-                close.BackColor = Black87;
-                close.FlatAppearance.BorderColor = Black87;
-            }
-
-            
-
-
         }
 
-        struct FileTabs
-        {
-            bool ifEdited;
-            string name;
-            bool ifFocused;
-            string filePath;
 
-            public FileTabs(bool ifedited, string name, bool iffocsed, string filepath){
-                this.ifEdited = ifedited;
-                this.ifFocused = iffocsed;
-                this.name = name;
-                this.filePath = filepath;
-            }
 
-            public string getName(){
-                return name;
-            }
-        }
 
-        private void AddATab()
-        {
-            tO.Buttons.Add(new Tab_Buttons(newTab(), newClosing(), tO.Tabs.Count));
-            tO.Tabs.Add(new FileTabs(false, "New File", true, System.IO.Path.GetTempPath() + Guid.NewGuid().ToString()));
-            refreshView(tO.Tabs.Count - 1);
-        }
 
-        private void CloseATab(int index)
-        {
-            if (index == tO.Focus)
-            {
-                tO.Focus -= 1;
-            }
-            if (index <= tO.Focus)
-            {
-                tO.Focus -= 1;
-            }
-            tO.Buttons[index].disposing();
-            tO.Tabs.RemoveAt(index);
-            tO.Buttons.RemoveAt(index);
-            refreshView(tO.Focus);
-        }
 
-        #region TabButton_Event
-        private void Tab_Click(object sender, EventArgs e)
-        {
-            Button tempbtn = (Button)sender; 
-            refreshView((int)tempbtn.Tag);
-        }
-
-        private void Close_Click(object sender, EventArgs e)
-        {
-            Button tempbtn = (Button)sender;
-            CloseATab((int)tempbtn.Tag);
-        }
-
-        private void CloseTab_MouseEnter(object sender, EventArgs e)
-        {
-            Button tempbtn = (Button)sender;
-            tempbtn.BackgroundImage = Properties.Resources.Button_CloseTab_MouseOver;
-        }
-
-        private void CloseTab_MouseLeave(object sender, EventArgs e)
-        {
-            Button tempbtn = (Button)sender;
-            tempbtn.BackgroundImage = Properties.Resources.Button_CloseTab;
-        }
-
-        #endregion
 
         private void TabSidebar_Paint(object sender, PaintEventArgs e)
         {
