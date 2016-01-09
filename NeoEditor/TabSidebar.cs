@@ -10,19 +10,22 @@ using System.Windows.Forms;
 
 namespace NeoEditor
 {
-    public partial class TabSidebar : UserControl
+    internal partial class TabSidebar : UserControl
     {
-        Form1 MainForm;
+        const bool debuging = true;
 
-        public TabSidebar(Form1 f)
+        public MainForm Mainform;
+        TabOrganizer tO;
+
+        public TabSidebar()
         {
             InitializeComponent();
-            MainForm = f;
+            tO = new TabOrganizer(this);
         }
 
         private void TabSidebar_Load(object sender, EventArgs e)
         {
-            AddATab();
+            if (!debuging) Debug_Info.Dispose();
         }
 
         #region Icon Add_Events
@@ -38,7 +41,7 @@ namespace NeoEditor
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            AddATab();
+            tO.NewFile();
         }
 
         #endregion
@@ -46,71 +49,70 @@ namespace NeoEditor
         public static Color Black87 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
         public static Color MainLimeGreen = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(231)))), ((int)(((byte)(118)))));
 
-        TabOrganizer tO = new TabOrganizer(); 
-
-
-
-        private void refreshView(int newFocus)
+         
+        internal class TabOrganizer
         {
-            tO.Tabs[tO.Focus].Buttons.outOfFocused();
-            if (newFocus >= 0)
-            {
-                tO.Buttons[newFocus].Focused();
-            }
-            tO.Focus = newFocus;
-            MainForm.Debug_RTX(tO.Focus, tO.Buttons.Count, tO.Buttons[tO.Focus].tab.Location.Y, tO.Buttons[tO.Focus].index);
-
-        }        
-        private void Organize()
-        {
-            for (int i = 0; i < tO.Tabs.Count; i++)
-            {
-                tO.Buttons[i].reAssign(i);
-                tO.Buttons[i].reLocate();
-            }
-        }
-
-        private class TabOrganizer
-        {
-            public int Focus;
-            public List<FileTabs> Tabs;
-            public FileTabs RefCurrent;
+            int Focus;
+            public List<FileTab> Tabs;
             TabSidebar ParentTS;
 
             public TabOrganizer(TabSidebar ParentTS){
-                NewFile();
-                this.Focus = 0;
-                this.Tabs = new List<FileTabs>();
-                this.RefCurrent = Tabs[0];
                 this.ParentTS = ParentTS;
+                this.Tabs = new List<FileTab>();
+                Focus = 0;
+                NewFile();
             }
 
-            private void CloseAFile(int index)
+            public void CloseAFile(FileTab tab)
             {
                 //Decide the focus to move up or down
                 //It should always move to the one above the tab which is being closed
                 //Unless the closing one is the first tab
+                tab.Buttons.Dispose();
+                Tabs.Remove(tab);
+                if (Focus > Tabs.Count - 1) Focus -= 1;
+                foreach (FileTab f in Tabs)
+                {
+                    f.Buttons.reLocate(Tabs.IndexOf(f));
+                }
+                
 
             }
 
-            private void NewFile()
+            public void SwitchFocusTo(FileTab tab)
             {
-                Tabs.Add(new FileTabs(false, "New File", true, System.IO.Path.GetTempPath() + Guid.NewGuid().ToString(), ParentTS));
+                Tabs[Focus].outOfFocused();
+                tab.Focused();
+                Focus = Tabs.IndexOf(tab);
+                if (TabSidebar.debuging) Debug();
             }
 
+            private void Debug()
+            {
+                ParentTS.Debug_Info.Text =
+                    "Focus: " + Focus + "\n" +
+                    "Count: " + Tabs.Count + "\n";
+            }
 
-            private class Tab_Buttons
+            public void NewFile()
+            {
+                Tabs.Add(new FileTab(false, "New File", true, System.IO.Path.GetTempPath() + Guid.NewGuid().ToString(), this));
+                SwitchFocusTo(Tabs[Tabs.Count-1]);
+            }
+            
+            internal class Tab_Buttons
             {
                 public Button tab;
                 public Button close;
-                TabOrganizer ParentTO;
-                FileTabs AttachedFile;
+                TabOrganizer RootTO;
+                FileTab AttachedFile;
 
-                public Tab_Buttons(TabOrganizer ParentTO)
+                public Tab_Buttons(TabOrganizer RootTO, FileTab AttachedFile)
                 {
+                    this.RootTO = RootTO;
+                    this.AttachedFile = AttachedFile;
                     this.tab = newTab();
                     this.close = newClosing();
-                    this.ParentTO = ParentTO;
                 }
 
                 public void reLocate(int index)
@@ -118,15 +120,6 @@ namespace NeoEditor
                     tab.Location = new System.Drawing.Point(0, index * 30);
                     close.Location = new System.Drawing.Point(tab.Width, index * 30);
                 }
-
-                //A (int) tag is assign to the buttons, which indicate the slot they currently located at
-                public void AssignTag(int index)
-                {
-                    tab.Tag = index;
-                    close.Tag = index;
-                    reLocate(index);
-                }
-
 
                 private Button newTab()
                 {
@@ -136,15 +129,15 @@ namespace NeoEditor
                     newBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
                     newBtn.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
                     newBtn.ForeColor = System.Drawing.Color.White;
-                    newBtn.Location = new System.Drawing.Point(0, ParentTO.Tabs.Count * 30);
-                    newBtn.Name = "Tab" + (ParentTO.Tabs.Count).ToString();
-                    newBtn.Size = new System.Drawing.Size(ParentTO.ParentTS.Width - 30, 30);
+                    newBtn.Location = new System.Drawing.Point(0, RootTO.Tabs.Count * 30);
+                    newBtn.Name = "Tab" + (RootTO.Tabs.Count).ToString();
+                    newBtn.Size = new System.Drawing.Size(RootTO.ParentTS.Width - 30, 30);
                     newBtn.Text = "New File";
                     newBtn.UseVisualStyleBackColor = false;
                     newBtn.Click += Tab_Click;
-                    newBtn.Tag = ParentTO.Tabs.Count;
+                    newBtn.Tag = this.AttachedFile;
 
-                    ParentTO.ParentTS.Controls.Add(newBtn);
+                    RootTO.ParentTS.Controls.Add(newBtn);
 
                     return newBtn;
                 }
@@ -158,17 +151,17 @@ namespace NeoEditor
                     newBtn.FlatAppearance.MouseDownBackColor = Black87;
                     newBtn.FlatAppearance.BorderColor = MainLimeGreen;
                     newBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-                    newBtn.Location = new System.Drawing.Point(ParentTO.ParentTS.Width - 30, ParentTO.Tabs.Count * 30);
-                    newBtn.Name = "CloseTab" + (ParentTO.Tabs.Count).ToString();
+                    newBtn.Location = new System.Drawing.Point(RootTO.ParentTS.Width - 30, RootTO.Tabs.Count * 30);
+                    newBtn.Name = "CloseTab" + (RootTO.Tabs.Count).ToString();
                     newBtn.Size = new System.Drawing.Size(30, 30);
                     newBtn.UseVisualStyleBackColor = false;
                     newBtn.Click += Close_Click;
                     newBtn.MouseEnter += CloseTab_MouseEnter;
                     newBtn.MouseLeave += CloseTab_MouseLeave;
                     newBtn.BringToFront();
-                    newBtn.Tag = ParentTO.Tabs.Count;
+                    newBtn.Tag = this.AttachedFile;
 
-                    ParentTO.ParentTS.Controls.Add(newBtn);
+                    RootTO.ParentTS.Controls.Add(newBtn);
 
                     return newBtn;
                 }
@@ -178,12 +171,13 @@ namespace NeoEditor
                 private void Tab_Click(object sender, EventArgs e)
                 {
                     Button tempbtn = (Button)sender;
+                    RootTO.SwitchFocusTo(((FileTab)tempbtn.Tag));
                 }
 
                 private void Close_Click(object sender, EventArgs e)
                 {
                     Button tempbtn = (Button)sender;
-                    ParentTO.CloseAFile((int)tempbtn.Tag);
+                    RootTO.CloseAFile((FileTab)tempbtn.Tag);
                 }
 
                 private void CloseTab_MouseEnter(object sender, EventArgs e)
@@ -200,57 +194,51 @@ namespace NeoEditor
 
                 #endregion
 
-                public void disposing()
+                public void Dispose()
                 {
                     tab.Dispose();
                     close.Dispose();
                 }
-
-                public void Focused()
-                {
-                    
-                    tab.BackColor = MainLimeGreen;
-                    tab.FlatAppearance.BorderColor = MainLimeGreen;
-                    close.BackColor = MainLimeGreen;
-                    close.FlatAppearance.BorderColor = MainLimeGreen;
-
-                }
-
-                public void outOfFocused()
-                {
-                    tab.BackColor = Black87;
-                    tab.FlatAppearance.BorderColor = Black87;
-                    close.BackColor = Black87;
-                    close.FlatAppearance.BorderColor = Black87;
-                }
-
-
-
-
             }
 
-            private class FileTabs
+            internal class FileTab
             {
                 bool ifEdited;
-                string name;
+                public string name;
                 public bool ifFocused;
                 string filePath;
-                Tab_Buttons Buttons;
-                TabSidebar tS;
+                public Tab_Buttons Buttons;
+                public TabOrganizer ParentTO;
+                string content;
 
-                public FileTabs(bool ifedited, string name, bool iffocsed, string filepath, TabSidebar tS)
+                public FileTab(bool ifedited, string name, bool iffocsed, string filepath, TabOrganizer ParentTO)
                 {
                     this.ifEdited = ifedited;
                     this.ifFocused = iffocsed;
                     this.name = name;
                     this.filePath = filepath;
-                    this.Buttons = new Tab_Buttons(newTab(), newClosing());
-                    this.tS = tS;
+                    this.Buttons = new Tab_Buttons(ParentTO, this);
+                    this.ParentTO = ParentTO;
+                    this.content = "";
                 }
 
-                public string getName()
+                public void Focused()
                 {
-                    return name;
+                    ifFocused = true;
+                    Buttons.tab.BackColor = MainLimeGreen;
+                    Buttons.tab.FlatAppearance.BorderColor = MainLimeGreen;
+                    Buttons.close.BackColor = MainLimeGreen;
+                    Buttons.close.FlatAppearance.BorderColor = MainLimeGreen;
+
+                }
+
+                public void outOfFocused()
+                {
+                    ifFocused = false;
+                    Buttons.tab.BackColor = Black87;
+                    Buttons.tab.FlatAppearance.BorderColor = Black87;
+                    Buttons.close.BackColor = Black87;
+                    Buttons.close.FlatAppearance.BorderColor = Black87;
                 }
 
 
@@ -258,12 +246,25 @@ namespace NeoEditor
 
         }
 
+        /*internal class Communicator
+        {
+            MainForm RootF;
+            TabSidebar ParentTS;
 
+            public Communicator(MainForm f, TabSidebar ParentTS)
+            {
+                this.RootF = f;
+                this.ParentTS = ParentTS;
+            }
 
+            public void a(string a){
+                RootF.RTX.Text = a;
+        }
+         
 
-
-
-
+            
+        }*/
+        
         private void TabSidebar_Paint(object sender, PaintEventArgs e)
         {
             using (Graphics g = this.CreateGraphics())

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.Icon_Add = new System.Windows.Forms.PictureBox();
+            this.Debug_Info = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.Icon_Add)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,12 +48,21 @@
             this.Icon_Add.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.Icon_Add.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
+            // Debug_Info
+            // 
+            this.Debug_Info.Location = new System.Drawing.Point(0, 457);
+            this.Debug_Info.Name = "Debug_Info";
+            this.Debug_Info.Size = new System.Drawing.Size(100, 96);
+            this.Debug_Info.TabIndex = 2;
+            this.Debug_Info.Text = "";
+            // 
             // TabSidebar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.Controls.Add(this.Debug_Info);
             this.Controls.Add(this.Icon_Add);
             this.Name = "TabSidebar";
             this.Size = new System.Drawing.Size(240, 672);
@@ -66,5 +76,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox Icon_Add;
+        private System.Windows.Forms.RichTextBox Debug_Info;
     }
 }

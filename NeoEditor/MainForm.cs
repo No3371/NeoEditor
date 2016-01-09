@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace NeoEditor
 {
-    public partial class Form1 : Form
+    internal partial class MainForm : Form
     {
         //DropShadow
         protected override CreateParams CreateParams
@@ -24,27 +24,40 @@ namespace NeoEditor
             }
         }
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            tabSidebar.Mainform = this;
         }
 
-        private void RTX_LocationChanged(object sender, EventArgs e)
+        internal class RTXManager
         {
-        }       
+            MainForm RootF;
 
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {
+            public RTXManager(MainForm f)
+            {
+                this.RootF = f;
+            }
+
+            public void LoadContent(string c)
+            {
+                RootF.RTX.Text = c;
+            }
+
+            public string SaveContent()
+            {
+                return RootF.RTX.Text;
+            }
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             using (Graphics g = this.CreateGraphics())
-            {
+            {/*
                 Pen shadow = new Pen(Color.FromArgb(24, 24, 24), 3);
                 g.DrawLine(shadow, tabSidebar.Width + 1, 4, tabSidebar.Width + 1, this.Height);
                 shadow = new Pen(Color.FromArgb(26, 26, 26), 2);
@@ -53,8 +66,10 @@ namespace NeoEditor
                 g.DrawLine(shadow, tabSidebar.Width + 1 + 5, 4, tabSidebar.Width + 1 + 5, this.Height);
                 g.Dispose();
                 shadow.Dispose();
+             */
             }
         }
+          
 
     }
 

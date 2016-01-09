@@ -1,6 +1,6 @@
 ﻿namespace NeoEditor
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// 設計工具所需的變數。
@@ -44,7 +44,6 @@
             this.RTX.Size = new System.Drawing.Size(1030, 700);
             this.RTX.TabIndex = 0;
             this.RTX.Text = "";
-            this.RTX.LocationChanged += new System.EventHandler(this.RTX_LocationChanged);
             // 
             // tabSidebar
             // 
@@ -56,7 +55,7 @@
             this.tabSidebar.Size = new System.Drawing.Size(240, 720);
             this.tabSidebar.TabIndex = 1;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -65,9 +64,9 @@
             this.Controls.Add(this.tabSidebar);
             this.Controls.Add(this.RTX);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "MainForm";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.ResumeLayout(false);
@@ -76,8 +75,8 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox RTX;
         private TabSidebar tabSidebar;
+        internal System.Windows.Forms.RichTextBox RTX;
     }
 }
 
