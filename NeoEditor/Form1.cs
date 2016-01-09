@@ -35,21 +35,10 @@ namespace NeoEditor
 
         private void RTX_LocationChanged(object sender, EventArgs e)
         {
-        }        
+        }       
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-        }
-
-
-        bool debug = true;
-        public void Debug_RTX(int focus, int Buttons_Count, int y, int Button_Index)
-        {
-            if(debug) RTX.Text =
-                "Foucs: " + focus +
-                "\nButtons_Count: " + Buttons_Count +
-                "\nposY: " + y +
-                "\nAssigned Index: " + Button_Index;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
