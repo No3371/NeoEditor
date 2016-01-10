@@ -28,32 +28,66 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.RTX = new System.Windows.Forms.RichTextBox();
+            this.CaptionBar = new System.Windows.Forms.Panel();
+            this.LogoHolder = new System.Windows.Forms.PictureBox();
+            this.MainPanel = new System.Windows.Forms.Panel();
             this.tabSidebar = new NeoEditor.TabSidebar();
+            this.editBox1 = new NeoEditor.EditBox();
+            this.CaptionBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoHolder)).BeginInit();
+            this.MainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // RTX
+            // CaptionBar
             // 
-            this.RTX.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.RTX.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.RTX.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.RTX.ForeColor = System.Drawing.Color.White;
-            this.RTX.Location = new System.Drawing.Point(249, 10);
-            this.RTX.Margin = new System.Windows.Forms.Padding(6);
-            this.RTX.Name = "RTX";
-            this.RTX.Size = new System.Drawing.Size(1030, 700);
-            this.RTX.TabIndex = 0;
-            this.RTX.Text = "";
+            this.CaptionBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.CaptionBar.Controls.Add(this.LogoHolder);
+            this.CaptionBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.CaptionBar.Location = new System.Drawing.Point(0, 0);
+            this.CaptionBar.Name = "CaptionBar";
+            this.CaptionBar.Size = new System.Drawing.Size(1280, 24);
+            this.CaptionBar.TabIndex = 3;
+            // 
+            // LogoHolder
+            // 
+            this.LogoHolder.BackColor = System.Drawing.Color.Transparent;
+            this.LogoHolder.Image = global::NeoEditor.Properties.Resources.Logo;
+            this.LogoHolder.Location = new System.Drawing.Point(520, 0);
+            this.LogoHolder.Name = "LogoHolder";
+            this.LogoHolder.Size = new System.Drawing.Size(240, 24);
+            this.LogoHolder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.LogoHolder.TabIndex = 3;
+            this.LogoHolder.TabStop = false;
+            // 
+            // MainPanel
+            // 
+            this.MainPanel.Controls.Add(this.tabSidebar);
+            this.MainPanel.Controls.Add(this.editBox1);
+            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.MainPanel.Location = new System.Drawing.Point(0, 24);
+            this.MainPanel.Name = "MainPanel";
+            this.MainPanel.Size = new System.Drawing.Size(240, 696);
+            this.MainPanel.TabIndex = 0;
+            this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
             // 
             // tabSidebar
             // 
             this.tabSidebar.AutoScroll = true;
             this.tabSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
-            this.tabSidebar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tabSidebar.Location = new System.Drawing.Point(0, 0);
+            this.tabSidebar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabSidebar.Location = new System.Drawing.Point(0, 200);
             this.tabSidebar.Name = "tabSidebar";
-            this.tabSidebar.Size = new System.Drawing.Size(240, 720);
+            this.tabSidebar.Size = new System.Drawing.Size(240, 496);
             this.tabSidebar.TabIndex = 1;
+            // 
+            // editBox1
+            // 
+            this.editBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.editBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.editBox1.Location = new System.Drawing.Point(0, 0);
+            this.editBox1.Name = "editBox1";
+            this.editBox1.Size = new System.Drawing.Size(240, 200);
+            this.editBox1.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -61,14 +95,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(1280, 720);
-            this.Controls.Add(this.tabSidebar);
-            this.Controls.Add(this.RTX);
+            this.Controls.Add(this.MainPanel);
+            this.Controls.Add(this.CaptionBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
+            this.CaptionBar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.LogoHolder)).EndInit();
+            this.MainPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -76,7 +112,10 @@
         #endregion
 
         private TabSidebar tabSidebar;
-        internal System.Windows.Forms.RichTextBox RTX;
+        private System.Windows.Forms.Panel CaptionBar;
+        private System.Windows.Forms.Panel MainPanel;
+        private System.Windows.Forms.PictureBox LogoHolder;
+        private EditBox editBox1;
     }
 }
 

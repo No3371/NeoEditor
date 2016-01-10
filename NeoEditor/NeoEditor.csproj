@@ -44,6 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditBox.Designer.cs">
+      <DependentUpon>EditBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileManager.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +71,9 @@
     <Compile Include="TabSidebar.Designer.cs">
       <DependentUpon>TabSidebar.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="EditBox.resx">
+      <DependentUpon>EditBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -113,6 +123,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Button_CloseTab_MouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_Italic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_Underline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_Bold.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

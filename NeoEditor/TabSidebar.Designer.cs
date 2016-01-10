@@ -38,19 +38,19 @@
             this.Icon_Add.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Icon_Add.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Icon_Add.Image = global::NeoEditor.Properties.Resources.Icon_Add;
-            this.Icon_Add.Location = new System.Drawing.Point(0, 559);
+            this.Icon_Add.Location = new System.Drawing.Point(0, 359);
             this.Icon_Add.Name = "Icon_Add";
             this.Icon_Add.Size = new System.Drawing.Size(240, 113);
             this.Icon_Add.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.Icon_Add.TabIndex = 1;
             this.Icon_Add.TabStop = false;
-            this.Icon_Add.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.Icon_Add.Click += new System.EventHandler(this.OnAddClicked);
             this.Icon_Add.MouseEnter += new System.EventHandler(this.pictureBox1_MouseEnter);
             this.Icon_Add.MouseLeave += new System.EventHandler(this.pictureBox1_MouseLeave);
             // 
             // Debug_Info
             // 
-            this.Debug_Info.Location = new System.Drawing.Point(0, 457);
+            this.Debug_Info.Location = new System.Drawing.Point(3, 257);
             this.Debug_Info.Name = "Debug_Info";
             this.Debug_Info.Size = new System.Drawing.Size(100, 96);
             this.Debug_Info.TabIndex = 2;
@@ -65,9 +65,8 @@
             this.Controls.Add(this.Debug_Info);
             this.Controls.Add(this.Icon_Add);
             this.Name = "TabSidebar";
-            this.Size = new System.Drawing.Size(240, 672);
+            this.Size = new System.Drawing.Size(240, 472);
             this.Load += new System.EventHandler(this.TabSidebar_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.TabSidebar_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.Icon_Add)).EndInit();
             this.ResumeLayout(false);
 
@@ -76,6 +75,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox Icon_Add;
-        private System.Windows.Forms.RichTextBox Debug_Info;
+        public System.Windows.Forms.RichTextBox Debug_Info;
     }
 }

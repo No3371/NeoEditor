@@ -19,4 +19,4 @@ G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.Propertie
 G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.TabSidebar.resources
 G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.csproj.GenerateResource.Cache
 G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.MainForm.resources
-G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.csprojResolveAssemblyReference.cache
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.EditBox.resources

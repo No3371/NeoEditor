@@ -10,8 +10,14 @@ using System.Windows.Forms;
 
 namespace NeoEditor
 {
-    internal partial class MainForm : Form
+    public partial class MainForm : Form
     {
+        
+        public static bool debuging = false;
+        public static Color Black87 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+        public static Color MainLimeGreen = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(231)))), ((int)(((byte)(118)))));
+        FileManager fileManager;
+
         //DropShadow
         protected override CreateParams CreateParams
         {
@@ -27,46 +33,39 @@ namespace NeoEditor
         public MainForm()
         {
             InitializeComponent();
+            fileManager = new FileManager(this.tabSidebar);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             tabSidebar.Mainform = this;
         }
-
-        internal class RTXManager
+        
+        private void MainPanel_Paint(object sender, PaintEventArgs e)
         {
-            MainForm RootF;
-
-            public RTXManager(MainForm f)
+            using (Graphics g = MainPanel.CreateGraphics())
             {
-                this.RootF = f;
-            }
-
-            public void LoadContent(string c)
-            {
-                RootF.RTX.Text = c;
-            }
-
-            public string SaveContent()
-            {
-                return RootF.RTX.Text;
-            }
-        }
-
-        private void Form1_Paint(object sender, PaintEventArgs e)
-        {
-            using (Graphics g = this.CreateGraphics())
-            {/*
-                Pen shadow = new Pen(Color.FromArgb(24, 24, 24), 3);
-                g.DrawLine(shadow, tabSidebar.Width + 1, 4, tabSidebar.Width + 1, this.Height);
-                shadow = new Pen(Color.FromArgb(26, 26, 26), 2);
-                g.DrawLine(shadow, tabSidebar.Width + 1 + 3, 4, tabSidebar.Width + 1 + 3, this.Height);
+                Pen shadow = new Pen(Color.FromArgb(24, 24, 24), 1);
+                g.DrawLine(shadow, tabSidebar.Width + 2, 0, tabSidebar.Width + 2, this.Height);
+                g.DrawLine(shadow, tabSidebar.Width, 2, this.Width, 2);
+                shadow = new Pen(Color.FromArgb(28, 28, 28), 1);
+                g.DrawLine(shadow, tabSidebar.Width + 2 + 1, 0, tabSidebar.Width + 2 + 1, this.Height);
+                g.DrawLine(shadow, tabSidebar.Width, 3, this.Width, 3);
                 shadow = new Pen(Color.FromArgb(30, 30, 30), 1);
-                g.DrawLine(shadow, tabSidebar.Width + 1 + 5, 4, tabSidebar.Width + 1 + 5, this.Height);
-                g.Dispose();
+                g.DrawLine(shadow, tabSidebar.Width + 2 + 1, 0, tabSidebar.Width + 2 + 1, this.Height);
+                g.DrawLine(shadow, tabSidebar.Width, 4, this.Width, 4);
+
                 shadow.Dispose();
-             */
+
+                Pen Reflect = new Pen(Color.FromArgb(48, 48, 48), 1);
+                g.DrawLine(Reflect, tabSidebar.Width, 0, tabSidebar.Width, this.Height);
+                g.DrawLine(Reflect, tabSidebar.Width, 0, this.Width, 0);
+                Reflect = new Pen(Color.FromArgb(30, 30, 30), 1);
+                g.DrawLine(Reflect, tabSidebar.Width+1, 0, tabSidebar.Width+1, this.Height);
+                g.DrawLine(Reflect, tabSidebar.Width, 1, this.Width, 1);
+
+                Reflect.Dispose();
+                             
             }
         }
           
