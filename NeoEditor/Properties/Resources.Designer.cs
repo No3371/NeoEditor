@@ -63,6 +63,16 @@ namespace NeoEditor.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap Alert {
+            get {
+                object obj = ResourceManager.GetObject("Alert", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap Button_Bold {
             get {
                 object obj = ResourceManager.GetObject("Button_Bold", resourceCulture);
@@ -103,6 +113,16 @@ namespace NeoEditor.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap Button_Minimize {
+            get {
+                object obj = ResourceManager.GetObject("Button_Minimize", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap Button_Underline {
             get {
                 object obj = ResourceManager.GetObject("Button_Underline", resourceCulture);
@@ -126,6 +146,46 @@ namespace NeoEditor.Properties {
         internal static System.Drawing.Bitmap Icon_Add_Active {
             get {
                 object obj = ResourceManager.GetObject("Icon_Add_Active", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Icon_Load {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Load", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Icon_Load_Active {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Load_Active", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Icon_Save {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Icon_Save_Active {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Save_Active", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

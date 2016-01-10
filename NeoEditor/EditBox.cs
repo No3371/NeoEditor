@@ -43,9 +43,9 @@ namespace NeoEditor
                 g.DrawLine(shadow, 0, 1, this.Width, 1);
                 g.DrawLine(Reflect, 0, 2, this.Width, 2);
                 
-                g.DrawLine(Reflect, 0, this.Height-3, this.Width, this.Height - 3);
-                g.DrawLine(shadow, 0, this.Height - 2, this.Width, this.Height - 2);
-                g.DrawLine(Reflect, 0, this.Height - 1, this.Width, this.Height - 1);
+                g.DrawLine(Reflect, 0, this.Height-30, this.Width, this.Height - 30);
+                g.DrawLine(shadow, 0, this.Height - 29, this.Width, this.Height - 29);
+                g.DrawLine(Reflect, 0, this.Height - 28, this.Width, this.Height - 28);
 
                 shadow.Dispose();
                 Reflect.Dispose();

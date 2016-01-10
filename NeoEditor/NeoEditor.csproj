@@ -63,6 +63,12 @@
     <Compile Include="GhostButton.Designer.cs">
       <DependentUpon>GhostButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="NotificationBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NotificationBar.Designer.cs">
+      <DependentUpon>NotificationBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TabSidebar.cs">
@@ -79,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GhostButton.resx">
       <DependentUpon>GhostButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotificationBar.resx">
+      <DependentUpon>NotificationBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -132,6 +141,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Button_Bold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button_Minimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon_Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon_Save_Active.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon_Load.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon_Load_Active.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Alert.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

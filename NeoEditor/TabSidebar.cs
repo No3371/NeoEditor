@@ -25,18 +25,36 @@ namespace NeoEditor
             if (!MainForm.debuging) Debug_Info.Dispose();
         }
 
-        #region Icon Add_Icons
-        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        #region Icons_Highlight
+        private void Add_MouseEnter(object sender, EventArgs e)
         {
             Icon_Add.Image = Properties.Resources.Icon_Add_Active;
         }
 
-        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        private void Add_MouseLeave(object sender, EventArgs e)
         {
             Icon_Add.Image = Properties.Resources.Icon_Add;
         }
 
+        private void Save_MouseEnter(object sender, EventArgs e)
+        {
+            Icon_Save.Image = Properties.Resources.Icon_Save_Active;
+        }
 
+        private void Save_MouseLeave(object sender, EventArgs e)
+        {
+            Icon_Save.Image = Properties.Resources.Icon_Save;
+        }
+
+        private void Load_MouseEnter(object sender, EventArgs e)
+        {
+            Icon_Load.Image = Properties.Resources.Icon_Load_Active;
+        }
+
+        private void Load_MouseLeave(object sender, EventArgs e)
+        {
+            Icon_Load.Image = Properties.Resources.Icon_Load;
+        }
         #endregion
 
         public class Tab_Buttons
@@ -54,6 +72,7 @@ namespace NeoEditor
                 this.AttachedFile = AttachedFile;
                 this.tab = newTab();
                 this.close = newClosing();
+                tab.Text = AttachedFile.name;
             }
 
             public void reLocate(int index)
@@ -143,31 +162,12 @@ namespace NeoEditor
         }
 
 
+        public delegate void Icon_Click(object sender, EventArgs e);
+        public event Icon_Click Icon_Click_Thrower;
 
-        /*internal class Communicator
+        public void OnIconClicked(object sender, EventArgs e)
         {
-            MainForm RootF;
-            TabSidebar ParentTS;
-
-            public Communicator(MainForm f, TabSidebar ParentTS)
-            {
-                this.RootF = f;
-                this.ParentTS = ParentTS;
-            }
-
-            public void a(string a){
-                RootF.RTX.Text = a;
-        }
-         
-
-            
-        }*/
-        public delegate void Icon_Add_Click(object sender, EventArgs e);
-        public event Icon_Add_Click Icon_Add_Thrower;
-
-        public void OnAddClicked(object sender, EventArgs e)
-        {
-            if (Icon_Add_Thrower != null) Icon_Add_Thrower(this, e);
+            if (Icon_Click_Thrower != null) Icon_Click_Thrower(((PictureBox)sender).Tag, e);
         }
     }
 }
