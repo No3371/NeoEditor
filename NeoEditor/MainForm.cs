@@ -13,7 +13,7 @@ namespace NeoEditor
 {
     public partial class MainForm : Form
     {
-        
+
         public static bool debuging = false;
         public static Color Black87 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
         public static Color MainLimeGreen = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(231)))), ((int)(((byte)(118)))));
@@ -45,6 +45,7 @@ namespace NeoEditor
         {
             InitializeComponent();
             fileManager = new FileManager(this, this.tabSidebar, this.RTX);
+            this.DoubleBuffered = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -52,7 +53,7 @@ namespace NeoEditor
             tabSidebar.Mainform = this;
             PTnotification = new Point(2, this.Height - 36);
         }
-        
+
         private void MainPanel_Paint(object sender, PaintEventArgs e)
         {
             using (Graphics g = RTXPanel.CreateGraphics())
@@ -61,10 +62,10 @@ namespace NeoEditor
                 g.DrawLine(shadow, 2, 0, 2, this.Height);
                 g.DrawLine(shadow, 0, 2, this.Width, 2);
                 shadow = new Pen(Color.FromArgb(28, 28, 28), 1);
-                g.DrawLine(shadow, 2+1, 0, 2+1, this.Height);
+                g.DrawLine(shadow, 2 + 1, 0, 2 + 1, this.Height);
                 g.DrawLine(shadow, 0, 3, this.Width, 3);
                 shadow = new Pen(Color.FromArgb(30, 30, 30), 1);
-                g.DrawLine(shadow, 2+2, 0, 2+2, this.Height);
+                g.DrawLine(shadow, 2 + 2, 0, 2 + 2, this.Height);
                 g.DrawLine(shadow, 0, 4, this.Width, 4);
 
                 shadow.Dispose();
@@ -77,7 +78,7 @@ namespace NeoEditor
                 g.DrawLine(Reflect, 0, 1, this.Width, 1);
 
                 Reflect.Dispose();
-                             
+
             }
         }
 
@@ -97,7 +98,7 @@ namespace NeoEditor
             {
                 Pen Reflect = new Pen(Color.FromArgb(52, 52, 52), 1);
                 Pen shadow = new Pen(Color.FromArgb(36, 36, 36), 1);
-                g.DrawLine(Reflect, this.Width-79, 0, this.Width-79, CaptionBar.Height);
+                g.DrawLine(Reflect, this.Width - 79, 0, this.Width - 79, CaptionBar.Height);
                 g.DrawLine(shadow, this.Width - 80, 0, this.Width - 80, CaptionBar.Height);
                 g.DrawLine(Reflect, this.Width - 81, 0, this.Width - 81, CaptionBar.Height);
 
@@ -106,12 +107,6 @@ namespace NeoEditor
 
             }
 
-        }
-
-        private void RTX_TextChanged(object sender, EventArgs e)
-        {
-            ((FileManager.File)RTX.Tag).ifEdited = true;
-            if(!((FileManager.File)RTX.Tag).Buttons.tab.Text.EndsWith("*Modified*")) ((FileManager.File)RTX.Tag).Buttons.tab.Text += " *Modified*";
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -126,7 +121,45 @@ namespace NeoEditor
 
             }
         }
-    }
 
+        private Keys lastKey = Keys.None;
+        private void RTX_KeyDown(object sender, KeyEventArgs e)
+        {
+            lastKey = e.KeyData;
+        }
+
+        private void RTX_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Char.IsControl(e.KeyChar))
+            {
+                //e.Handled = true;//prevent this key press
+                Keys pressedKey = this.lastKey;
+
+                ((FileManager.File)RTX.Tag).ifEdited = true;
+                if (!((FileManager.File)RTX.Tag).Buttons.tab.Text.EndsWith("*Modified*")) ((FileManager.File)RTX.Tag).Buttons.tab.Text += " *Modified*";
+
+            }
+        }
+
+        private void tabSidebar_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files)
+            {
+                fileManager.LoadAFile(file);
+            }
+        }
+
+        private void tabSidebar_DragEnter(object sender, DragEventArgs e)
+        {
+
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, false) == true)
+            {
+                // 允許拖拉動作繼續 (這時滑鼠游標應該會顯示 +)
+                e.Effect = DragDropEffects.All;
+
+            }
+        }
+    }
 
 }

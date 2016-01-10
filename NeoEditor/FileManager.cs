@@ -38,8 +38,18 @@ namespace NeoEditor
 #pragma warning restore CS0252 // 可能誤用參考比較; 左端需要轉換
         }
 
-        public void CloseAFile(File tab)
+        public bool CloseAFile(File tab)
         {
+            //Ask to save if modified
+            if(tab.ifEdited == true)
+            {
+                DialogResult dialogResult = MessageBox.Show("The file you just try to close is modified and not yet saved, do you want to save it?", "Save?", MessageBoxButtons.YesNo); ;
+                if (dialogResult == DialogResult.Yes)
+                {
+                    if(!SaveAFile(tab)) return false;
+                }
+            }            
+
             //Decide the focus to move up or down
             //It should always move to the one above the tab which is being closed
             //Unless the closing one is the first tab
@@ -50,17 +60,19 @@ namespace NeoEditor
                 f.Buttons.reLocate(Tabs.IndexOf(f));
             }
             if (Focus > Tabs.Count - 1) Focus -= 1;
-            SwitchFocusTo(Tabs[Focus]);
+            if (Focus < 0) NewFile();
+            else SwitchFocusTo(Tabs[Focus]);
+            return true;
 
 
         }
 
         public void SwitchFocusTo(File tab)
         {
-            Tabs[Focus].outOfFocused();
+            if(Focus >= 0) Tabs[Focus].outOfFocused();
+            rtx.ResetText();
             tab.Focused();
             Focus = Tabs.IndexOf(tab);
-            //rtx.Text = tab.content;
 
             if (MainForm.debuging) Debug();
         }
@@ -78,7 +90,7 @@ namespace NeoEditor
             SwitchFocusTo(Tabs[Tabs.Count - 1]);
         }
 
-        public void SaveAFile(File f)
+        public bool SaveAFile(File f)
         {
             if (String.IsNullOrEmpty(f.filePath)){
                 SaveFileDialog saveDlg = new SaveFileDialog();
@@ -92,16 +104,17 @@ namespace NeoEditor
                 else
                 {
                     new NotificationBar(mainform, Color.OrangeRed, "Operation aborted. The file is not saved.");
-                    return;
+                    return false;
                 }
             }
             rtx.SaveFile(f.filePath);
             f.content = rtx.Text;
             f.Saved();
             new NotificationBar(mainform, MainForm.MainLimeGreen, f.filePath + " Saved!");
+            return true;
         }
 
-        public void LoadAFile()
+        public bool LoadAFile()
         {
 
             OpenFileDialog openDlg = new OpenFileDialog();
@@ -116,17 +129,33 @@ namespace NeoEditor
                     {
                         new NotificationBar(mainform, Color.OrangeRed, "You have opened the file. Redirecting...");
                         SwitchFocusTo(loaded);
-                        return;
+                        return false;
                     }
                     }
                 Tabs.Add(new File(openDlg.FileName.Substring(openDlg.FileName.LastIndexOf("\\") + 1), true, openDlg.FileName, this));
                 SwitchFocusTo(Tabs[Tabs.Count - 1]);
+                return true;
             }
             else
             {
                 new NotificationBar(mainform, Color.OrangeRed, "Operation aborted. The file will not be opened.");
-                return;
+                return false;
             }
+        }
+        public bool LoadAFile(string path)
+        {
+            foreach (File loaded in Tabs)
+                {
+                    if (path == loaded.filePath)
+                    {
+                        new NotificationBar(mainform, Color.OrangeRed, "You have opened the file. Redirecting...");
+                        SwitchFocusTo(loaded);
+                        return false;
+                    }
+                }
+                Tabs.Add(new File(path.Substring(path.LastIndexOf("\\") + 1), true, path, this));
+                SwitchFocusTo(Tabs[Tabs.Count - 1]);
+                return true;
         }
 
 

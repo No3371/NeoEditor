@@ -86,10 +86,11 @@
             // 
             this.Button_Color.BackColor = System.Drawing.Color.Red;
             this.Button_Color.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Button_Color.FlatAppearance.BorderSize = 0;
             this.Button_Color.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Color.Location = new System.Drawing.Point(98, 47);
+            this.Button_Color.Location = new System.Drawing.Point(102, 49);
             this.Button_Color.Name = "Button_Color";
-            this.Button_Color.Size = new System.Drawing.Size(24, 24);
+            this.Button_Color.Size = new System.Drawing.Size(20, 20);
             this.Button_Color.TabIndex = 2;
             this.Button_Color.UseVisualStyleBackColor = false;
             // 
