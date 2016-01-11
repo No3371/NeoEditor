@@ -138,7 +138,7 @@ namespace NeoEditor
             }
             else
             {
-                new NotificationBar(mainform, Color.OrangeRed, "Operation aborted. The file will not be opened.");
+                new NotificationBar(mainform, Color.OrangeRed, "Operation aborted. No file will be opened.");
                 return false;
             }
         }

@@ -21,4 +21,4 @@ G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.csproj.Ge
 G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.MainForm.resources
 G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.EditBox.resources
 G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.NotificationBar.resources
-G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.csprojResolveAssemblyReference.cache
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Debug\NeoEditor.ColorHolder.resources

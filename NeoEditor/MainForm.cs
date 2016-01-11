@@ -45,6 +45,7 @@ namespace NeoEditor
         {
             InitializeComponent();
             fileManager = new FileManager(this, this.tabSidebar, this.RTX);
+            editBox.AssignRTX(this.RTX, this);
             this.DoubleBuffered = true;
         }
 

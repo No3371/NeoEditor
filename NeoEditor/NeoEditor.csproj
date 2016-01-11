@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorHolder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColorHolder.Designer.cs">
+      <DependentUpon>ColorHolder.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -77,6 +83,9 @@
     <Compile Include="TabSidebar.Designer.cs">
       <DependentUpon>TabSidebar.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ColorHolder.resx">
+      <DependentUpon>ColorHolder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditBox.resx">
       <DependentUpon>EditBox.cs</DependentUpon>
     </EmbeddedResource>

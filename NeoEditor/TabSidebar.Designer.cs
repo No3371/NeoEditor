@@ -31,17 +31,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TabSidebar));
             this.Debug_Info = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.PlaceHolderRight = new System.Windows.Forms.PictureBox();
             this.Icon_Save = new System.Windows.Forms.PictureBox();
             this.Icon_Add = new System.Windows.Forms.PictureBox();
             this.Icon_Load = new System.Windows.Forms.PictureBox();
             this.PlaceHolderLeft = new System.Windows.Forms.PictureBox();
-            this.PlaceHolderRight = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PlaceHolderRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Icon_Save)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Icon_Add)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Icon_Load)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PlaceHolderLeft)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PlaceHolderRight)).BeginInit();
             this.SuspendLayout();
             // 
             // Debug_Info
@@ -60,10 +60,19 @@
             this.panel1.Controls.Add(this.Icon_Load);
             this.panel1.Controls.Add(this.PlaceHolderLeft);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 372);
+            this.panel1.Location = new System.Drawing.Point(0, 516);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(240, 100);
             this.panel1.TabIndex = 3;
+            // 
+            // PlaceHolderRight
+            // 
+            this.PlaceHolderRight.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PlaceHolderRight.Location = new System.Drawing.Point(210, 0);
+            this.PlaceHolderRight.Name = "PlaceHolderRight";
+            this.PlaceHolderRight.Size = new System.Drawing.Size(30, 100);
+            this.PlaceHolderRight.TabIndex = 4;
+            this.PlaceHolderRight.TabStop = false;
             // 
             // Icon_Save
             // 
@@ -122,32 +131,23 @@
             this.PlaceHolderLeft.TabIndex = 3;
             this.PlaceHolderLeft.TabStop = false;
             // 
-            // PlaceHolderRight
-            // 
-            this.PlaceHolderRight.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PlaceHolderRight.Location = new System.Drawing.Point(210, 0);
-            this.PlaceHolderRight.Name = "PlaceHolderRight";
-            this.PlaceHolderRight.Size = new System.Drawing.Size(30, 100);
-            this.PlaceHolderRight.TabIndex = 4;
-            this.PlaceHolderRight.TabStop = false;
-            // 
             // TabSidebar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Debug_Info);
             this.Name = "TabSidebar";
-            this.Size = new System.Drawing.Size(240, 472);
+            this.Size = new System.Drawing.Size(240, 616);
             this.Load += new System.EventHandler(this.TabSidebar_Load);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PlaceHolderRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Icon_Save)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Icon_Add)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Icon_Load)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PlaceHolderLeft)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PlaceHolderRight)).EndInit();
             this.ResumeLayout(false);
 
         }

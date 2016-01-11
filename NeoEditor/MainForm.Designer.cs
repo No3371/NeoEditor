@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.CaptionBar = new System.Windows.Forms.Panel();
-            this.MainPanel = new System.Windows.Forms.Panel();
-            this.RTX = new System.Windows.Forms.RichTextBox();
-            this.RTXPanel = new System.Windows.Forms.Panel();
             this.Pic_Logo = new System.Windows.Forms.PictureBox();
             this.Button_Min = new System.Windows.Forms.Button();
             this.Button_Exit = new System.Windows.Forms.Button();
+            this.MainPanel = new System.Windows.Forms.Panel();
+            this.RTX = new System.Windows.Forms.RichTextBox();
+            this.RTXPanel = new System.Windows.Forms.Panel();
             this.tabSidebar = new NeoEditor.TabSidebar();
-            this.editBox1 = new NeoEditor.EditBox();
+            this.editBox = new NeoEditor.EditBox();
             this.CaptionBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Logo)).BeginInit();
             this.MainPanel.SuspendLayout();
             this.RTXPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Logo)).BeginInit();
             this.SuspendLayout();
             // 
             // CaptionBar
@@ -55,42 +55,6 @@
             this.CaptionBar.Size = new System.Drawing.Size(1280, 24);
             this.CaptionBar.TabIndex = 3;
             this.CaptionBar.Paint += new System.Windows.Forms.PaintEventHandler(this.CaptionBar_Paint);
-            // 
-            // MainPanel
-            // 
-            this.MainPanel.Controls.Add(this.tabSidebar);
-            this.MainPanel.Controls.Add(this.editBox1);
-            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.MainPanel.Location = new System.Drawing.Point(0, 24);
-            this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(240, 696);
-            this.MainPanel.TabIndex = 0;
-            this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
-            // 
-            // RTX
-            // 
-            this.RTX.AcceptsTab = true;
-            this.RTX.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.RTX.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.RTX.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.RTX.ForeColor = System.Drawing.Color.Silver;
-            this.RTX.Location = new System.Drawing.Point(10, 10);
-            this.RTX.Name = "RTX";
-            this.RTX.Size = new System.Drawing.Size(1020, 676);
-            this.RTX.TabIndex = 4;
-            this.RTX.Text = "";
-            this.RTX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RTX_KeyDown);
-            this.RTX.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RTX_KeyPress);
-            // 
-            // RTXPanel
-            // 
-            this.RTXPanel.Controls.Add(this.RTX);
-            this.RTXPanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.RTXPanel.Location = new System.Drawing.Point(240, 24);
-            this.RTXPanel.Name = "RTXPanel";
-            this.RTXPanel.Size = new System.Drawing.Size(1040, 696);
-            this.RTXPanel.TabIndex = 5;
-            this.RTXPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
             // 
             // Pic_Logo
             // 
@@ -129,32 +93,68 @@
             this.Button_Exit.UseVisualStyleBackColor = true;
             this.Button_Exit.Click += new System.EventHandler(this.button1_Click);
             // 
+            // MainPanel
+            // 
+            this.MainPanel.Controls.Add(this.tabSidebar);
+            this.MainPanel.Controls.Add(this.editBox);
+            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.MainPanel.Location = new System.Drawing.Point(0, 24);
+            this.MainPanel.Name = "MainPanel";
+            this.MainPanel.Size = new System.Drawing.Size(240, 696);
+            this.MainPanel.TabIndex = 0;
+            this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
+            // 
+            // RTX
+            // 
+            this.RTX.AcceptsTab = true;
+            this.RTX.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.RTX.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.RTX.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.RTX.ForeColor = System.Drawing.Color.Silver;
+            this.RTX.Location = new System.Drawing.Point(10, 10);
+            this.RTX.Name = "RTX";
+            this.RTX.Size = new System.Drawing.Size(1020, 676);
+            this.RTX.TabIndex = 4;
+            this.RTX.Text = "";
+            this.RTX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RTX_KeyDown);
+            this.RTX.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RTX_KeyPress);
+            // 
+            // RTXPanel
+            // 
+            this.RTXPanel.Controls.Add(this.RTX);
+            this.RTXPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.RTXPanel.Location = new System.Drawing.Point(240, 24);
+            this.RTXPanel.Name = "RTXPanel";
+            this.RTXPanel.Size = new System.Drawing.Size(1040, 696);
+            this.RTXPanel.TabIndex = 5;
+            this.RTXPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
+            // 
             // tabSidebar
             // 
             this.tabSidebar.AllowDrop = true;
             this.tabSidebar.AutoScroll = true;
             this.tabSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
             this.tabSidebar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabSidebar.Location = new System.Drawing.Point(0, 100);
+            this.tabSidebar.Location = new System.Drawing.Point(0, 80);
             this.tabSidebar.Name = "tabSidebar";
-            this.tabSidebar.Size = new System.Drawing.Size(240, 596);
+            this.tabSidebar.Size = new System.Drawing.Size(240, 616);
             this.tabSidebar.TabIndex = 1;
             this.tabSidebar.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabSidebar_DragDrop);
             this.tabSidebar.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabSidebar_DragEnter);
             // 
-            // editBox1
+            // editBox
             // 
-            this.editBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
-            this.editBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.editBox1.Location = new System.Drawing.Point(0, 0);
-            this.editBox1.Name = "editBox1";
-            this.editBox1.Size = new System.Drawing.Size(240, 100);
-            this.editBox1.TabIndex = 2;
+            this.editBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.editBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.editBox.Location = new System.Drawing.Point(0, 0);
+            this.editBox.Name = "editBox";
+            this.editBox.Size = new System.Drawing.Size(240, 80);
+            this.editBox.TabIndex = 2;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(1280, 720);
             this.Controls.Add(this.RTXPanel);
@@ -167,9 +167,9 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.CaptionBar.ResumeLayout(false);
             this.CaptionBar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Pic_Logo)).EndInit();
             this.MainPanel.ResumeLayout(false);
             this.RTXPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Pic_Logo)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -179,7 +179,7 @@
         private TabSidebar tabSidebar;
         private System.Windows.Forms.Panel CaptionBar;
         private System.Windows.Forms.Panel MainPanel;
-        private EditBox editBox1;
+        private EditBox editBox;
         private System.Windows.Forms.Button Button_Exit;
         private System.Windows.Forms.RichTextBox RTX;
         private System.Windows.Forms.Button Button_Min;
