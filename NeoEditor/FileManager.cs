@@ -43,25 +43,30 @@ namespace NeoEditor
             //Ask to save if modified
             if(tab.ifEdited == true)
             {
-                DialogResult dialogResult = MessageBox.Show("The file you just try to close is modified and not yet saved, do you want to save it?", "Save?", MessageBoxButtons.YesNo); ;
+                DialogResult dialogResult = MessageBox.Show("The file you just tried to close is modified and not yet saved, do you want to save it?", "Save?", MessageBoxButtons.YesNo); ;
                 if (dialogResult == DialogResult.Yes)
                 {
                     if(!SaveAFile(tab)) return false;
                 }
-            }            
+            }
+            if (Tabs.Count - 1 < 1) NewFile();
 
-            //Decide the focus to move up or down
-            //It should always move to the one above the tab which is being closed
-            //Unless the closing one is the first tab
-            tab.Buttons.Dispose();
-            Tabs.Remove(tab);
+            if(Tabs.IndexOf(tab) <= Focus)
+            {
+                tab.Buttons.Dispose();
+                Tabs.Remove(tab);
+                SwitchFocusTo(Tabs[Focus - 1]);
+            }
+            else
+            {
+                tab.Buttons.Dispose();
+                Tabs.Remove(tab);
+            }
+
             foreach (File f in Tabs)
             {
                 f.Buttons.reLocate(Tabs.IndexOf(f));
             }
-            if (Focus > Tabs.Count - 1) Focus -= 1;
-            if (Focus < 0) NewFile();
-            else SwitchFocusTo(Tabs[Focus]);
             return true;
 
 
@@ -69,8 +74,8 @@ namespace NeoEditor
 
         public void SwitchFocusTo(File tab)
         {
-            if(Focus >= 0) Tabs[Focus].outOfFocused();
-            rtx.ResetText();
+            if(Focus >= 0 && Focus < Tabs.Count) Tabs[Focus].outOfFocused();
+            rtx.Clear();
             tab.Focused();
             Focus = Tabs.IndexOf(tab);
 
@@ -190,7 +195,7 @@ namespace NeoEditor
             {
                 RichTextBox tempRTX = new RichTextBox();
                 tempRTX.LoadFile(path);
-                return tempRTX.Text;
+                return tempRTX.Rtf;
             }
 
             public void Focused()
@@ -200,7 +205,7 @@ namespace NeoEditor
                 buttons.tab.FlatAppearance.BorderColor = MainForm.MainLimeGreen;
                 buttons.close.BackColor = MainForm.MainLimeGreen;
                 buttons.close.FlatAppearance.BorderColor = MainForm.MainLimeGreen;
-                ParentFM.rtx.Text = content;
+                ParentFM.rtx.Rtf = content;
                 ParentFM.rtx.Tag = this;
             }
 
@@ -211,7 +216,7 @@ namespace NeoEditor
                 buttons.tab.FlatAppearance.BorderColor = MainForm.Black87;
                 buttons.close.BackColor = MainForm.Black87;
                 buttons.close.FlatAppearance.BorderColor = MainForm.Black87;
-                content = ParentFM.rtx.Text;
+                content = ParentFM.rtx.Rtf;
             }
 
             public void Saved()

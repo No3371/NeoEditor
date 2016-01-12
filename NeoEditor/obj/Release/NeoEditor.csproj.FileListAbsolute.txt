@@ -1,0 +1,15 @@
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\bin\Release\NeoEditor.exe.config
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\bin\Release\NeoEditor.exe
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\bin\Release\NeoEditor.pdb
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.csprojResolveAssemblyReference.cache
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.ColorHolder.resources
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.EditBox.resources
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.Loader.resources
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.MainForm.resources
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.GhostButton.resources
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.NotificationBar.resources
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.Properties.Resources.resources
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.TabSidebar.resources
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.csproj.GenerateResource.Cache
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.exe
+G:\Google Drive\Papers\Windows\NeoEditor\NeoEditor\obj\Release\NeoEditor.pdb

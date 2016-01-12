@@ -14,7 +14,7 @@ namespace NeoEditor
     public partial class MainForm : Form
     {
 
-        public static bool debuging = false;
+        public static bool debuging = true;
         public static Color Black87 = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
         public static Color MainLimeGreen = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(231)))), ((int)(((byte)(118)))));
         FileManager fileManager;

@@ -20,7 +20,7 @@ namespace NeoEditor
 
         private void FadeoutTimer_Tick(object sender, EventArgs e)
         {
-            this.Opacity -= 0.01;
+            this.Opacity -= 0.02;
             if (Opacity == 0) this.Dispose();
         }
 
