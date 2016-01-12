@@ -103,14 +103,14 @@ namespace NeoEditor
                 }
                 else
                 {
-                    new NotificationBar(mainform, Color.OrangeRed, "Operation aborted. The file is not saved.");
+                    new NotificationBar(mainform, "Bad", "Operation aborted. The file is not saved.");
                     return false;
                 }
             }
             rtx.SaveFile(f.filePath);
             f.content = rtx.Text;
             f.Saved();
-            new NotificationBar(mainform, MainForm.MainLimeGreen, f.filePath + " Saved!");
+            new NotificationBar(mainform, "Good", f.filePath + " Saved!");
             return true;
         }
 
@@ -127,7 +127,7 @@ namespace NeoEditor
                 {
                     if (openDlg.FileName == loaded.filePath)
                     {
-                        new NotificationBar(mainform, Color.OrangeRed, "You have opened the file. Redirecting...");
+                        new NotificationBar(mainform, "Bad", "You have opened the file. Redirecting...");
                         SwitchFocusTo(loaded);
                         return false;
                     }
@@ -138,7 +138,7 @@ namespace NeoEditor
             }
             else
             {
-                new NotificationBar(mainform, Color.OrangeRed, "Operation aborted. No file will be opened.");
+                new NotificationBar(mainform, "Bad", "Operation aborted. No file will be opened.");
                 return false;
             }
         }
@@ -148,7 +148,7 @@ namespace NeoEditor
                 {
                     if (path == loaded.filePath)
                     {
-                        new NotificationBar(mainform, Color.OrangeRed, "You have opened the file. Redirecting...");
+                        new NotificationBar(mainform, "Bad", "You have opened the file. Redirecting...");
                         SwitchFocusTo(loaded);
                         return false;
                     }

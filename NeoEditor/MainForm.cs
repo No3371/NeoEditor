@@ -137,7 +137,7 @@ namespace NeoEditor
                 Keys pressedKey = this.lastKey;
 
                 ((FileManager.File)RTX.Tag).ifEdited = true;
-                if (!((FileManager.File)RTX.Tag).Buttons.tab.Text.EndsWith("*Modified*")) ((FileManager.File)RTX.Tag).Buttons.tab.Text += " *Modified*";
+                if (!((FileManager.File)RTX.Tag).Buttons.tab.Text.EndsWith("*Modified*")) ((FileManager.File)RTX.Tag).Buttons.tab.Text += "    *Modified*";
 
             }
         }
@@ -159,6 +159,19 @@ namespace NeoEditor
                 // 允許拖拉動作繼續 (這時滑鼠游標應該會顯示 +)
                 e.Effect = DragDropEffects.All;
 
+            }
+        }
+
+        private void RTX_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Left){
+                if (RTX.SelectionFont != null)
+                {
+                    editBox.FontBox.Text = RTX.SelectionFont.Name;
+                    editBox.FontSizeBox.Text = RTX.SelectionFont.Size.ToString();
+                    editBox.StyleCheck(RTX.SelectionFont.Style);
+                }
+                else editBox.FontBox.Text = "(More then one)";
             }
         }
     }

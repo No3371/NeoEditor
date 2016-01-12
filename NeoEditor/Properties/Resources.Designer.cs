@@ -73,16 +73,6 @@ namespace NeoEditor.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Bitmap Button_Bold {
-            get {
-                object obj = ResourceManager.GetObject("Button_Bold", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
         internal static System.Drawing.Bitmap Button_CloseTab {
             get {
                 object obj = ResourceManager.GetObject("Button_CloseTab", resourceCulture);
@@ -103,16 +93,6 @@ namespace NeoEditor.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Bitmap Button_Italic {
-            get {
-                object obj = ResourceManager.GetObject("Button_Italic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
-        /// </summary>
         internal static System.Drawing.Bitmap Button_Minimize {
             get {
                 object obj = ResourceManager.GetObject("Button_Minimize", resourceCulture);
@@ -123,9 +103,9 @@ namespace NeoEditor.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Bitmap Button_Underline {
+        internal static System.Drawing.Bitmap Caption_Logo {
             get {
-                object obj = ResourceManager.GetObject("Button_Underline", resourceCulture);
+                object obj = ResourceManager.GetObject("Caption_Logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +113,69 @@ namespace NeoEditor.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Bitmap Caption_Logo {
+        internal static System.Drawing.Bitmap Confirmation {
             get {
-                object obj = ResourceManager.GetObject("Caption_Logo", resourceCulture);
+                object obj = ResourceManager.GetObject("Confirmation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Font_Bold {
+            get {
+                object obj = ResourceManager.GetObject("Font_Bold", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Font_Bold_Actived {
+            get {
+                object obj = ResourceManager.GetObject("Font_Bold_Actived", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Font_Italic {
+            get {
+                object obj = ResourceManager.GetObject("Font_Italic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Font_Italic_Actived {
+            get {
+                object obj = ResourceManager.GetObject("Font_Italic_Actived", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Font_Underline {
+            get {
+                object obj = ResourceManager.GetObject("Font_Underline", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Font_Underline_Actived {
+            get {
+                object obj = ResourceManager.GetObject("Font_Underline_Actived", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

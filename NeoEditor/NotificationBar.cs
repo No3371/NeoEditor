@@ -14,15 +14,20 @@ namespace NeoEditor
     {
         public MainForm mainform;
 
-        public NotificationBar(MainForm f, Color BackColor, string notification)
+        public NotificationBar(MainForm f, string type, string notification)
         {
             InitializeComponent();
-            this.BackColor = BackColor;
-
             this.mainform = f;
             f.RTXPanel.Controls.Add(this);
             Location = this.mainform.PTnotification;
             this.BringToFront();
+
+            if(type == "Good")
+            {
+                this.Icon.Image = Properties.Resources.Confirmation;
+                this.BackColor = MainForm.MainLimeGreen;
+            }else if(type == "Bad"){
+            }
 
             sendNotification(notification);
         }

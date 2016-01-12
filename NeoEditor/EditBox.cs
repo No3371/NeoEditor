@@ -13,26 +13,26 @@ namespace NeoEditor
 {
     public partial class EditBox : UserControl
     {
-        List<string> SystemFonts = new List<string>();
+        FontFamily[] fontFamilies;
         RichTextBox rtx;
-        MainForm f;
+        MainForm mainform;
 
         public EditBox()
         {
             InitializeComponent();
             
-            FontFamily[] fontFamilies = new InstalledFontCollection().Families;
+            fontFamilies = new InstalledFontCollection().Families;
+            FontBox.Items.Clear();
             foreach (FontFamily font in fontFamilies)
             {
                 FontBox.Items.Add(font.Name);
-                if(font.Name == "Times New Roman") FontBox.Text = "Times New Roman";
             }
         }
 
         public void AssignRTX(RichTextBox rtx, MainForm f)
         {
             this.rtx = rtx;
-            this.f = f;
+            this.mainform = f;
         }
 
         private void EditBox_Load(object sender, EventArgs e)
@@ -66,8 +66,59 @@ namespace NeoEditor
             if(e.Button == MouseButtons.Left)
             {
                 rtx.SelectionColor = ((ColorHolder)sender).Holding;
-                f.ActiveControl = rtx;
+                mainform.ActiveControl = rtx;
             }
+        }
+
+        private void FontBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            int size;
+            
+            if (FontBox.Items.Contains(FontBox.SelectedItem) && int.TryParse((string)FontSizeBox.SelectedItem, out size))
+            {
+                rtx.SelectionFont = new Font((string)FontBox.SelectedItem, size);
+                mainform.ActiveControl = rtx;
+            }
+            else
+            {
+                new NotificationBar(mainform, "Bad", "The selected font is not found. This is a bug, please repot to us.");
+            }
+        }
+
+        public void StyleCheck(FontStyle fS)
+        {
+            if (fS.HasFlag(FontStyle.Bold)){ this.Button_Bold.BackgroundImage = Properties.Resources.Font_Bold_Actived; }
+            else this.Button_Bold.BackgroundImage = Properties.Resources.Font_Bold;
+            if (fS.HasFlag(FontStyle.Italic)) { this.Button_Italic.BackgroundImage = Properties.Resources.Font_Italic_Actived; }
+            else this.Button_Italic.BackgroundImage = Properties.Resources.Font_Italic;
+            if (fS.HasFlag(FontStyle.Underline)) { this.Button_Underline.BackgroundImage = Properties.Resources.Font_Underline_Actived; }
+            else this.Button_Underline.BackgroundImage = Properties.Resources.Font_Underline;
+        }
+
+        private void Style_Click(object sender, EventArgs e)
+        {
+#pragma warning disable CS0252 // 可能誤用參考比較; 左端需要轉換
+            try {
+                switch ((sender as Button).Tag as string)
+                {
+                    case "Bold":
+                        rtx.SelectionFont = new Font(rtx.SelectionFont, rtx.SelectionFont.Style ^ FontStyle.Bold);
+                        break;
+                    case "Italic":
+                        rtx.SelectionFont = new Font(rtx.SelectionFont, rtx.SelectionFont.Style ^ FontStyle.Italic);
+                        break;
+                    case "Underline":
+                        rtx.SelectionFont = new Font(rtx.SelectionFont, rtx.SelectionFont.Style ^ FontStyle.Underline);
+                        break;
+                };
+                StyleCheck(rtx.SelectionFont.Style);
+                mainform.ActiveControl = rtx;
+            }
+            catch (Exception e2)
+            {
+                new NotificationBar(mainform, "Bad", "Style Changing failed. Are you trying to change style of texts in different fonts? This will be included in further updates.");
+            }
+#pragma warning restore CS0252 // 可能誤用參考比較; 左端需要轉換
         }
     }
 }

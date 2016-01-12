@@ -35,19 +35,17 @@ namespace NeoEditor
             using(Graphics g = this.CreateGraphics())
             {
                 Brush b = new SolidBrush(Holding);
-                Pen p = new Pen(Color.FromArgb(25, Holding), 4);
+                Pen p = new Pen(Color.FromArgb(25, Holding), 6);
+                RectangleF r = new RectangleF((float)(0.2 * this.Width), (float)(0.2 * this.Height), (float)(0.6 * this.Width), (float)(this.Height * 0.6));
                 // Draw the button in the form of a circle
-                g.FillEllipse(b, (float)(0.15 * this.Width), (float)(0.15 * this.Height), (float)(0.7 * this.Width), (float)(this.Height * 0.7));
-                g.DrawEllipse(p, (float)(0.15 * this.Width), (float)(0.15 * this.Height), (float)(0.7 * this.Width), (float)(this.Height * 0.7));
+                g.FillEllipse(b, r);
+                g.DrawEllipse(p, r);
 
-                p = new Pen(Color.FromArgb(50, Holding), 3);
-                g.DrawEllipse(p, (float)(0.15 * this.Width), (float)(0.15 * this.Height), (float)(0.7 * this.Width), (float)(this.Height * 0.7));
+                p = new Pen(Color.FromArgb(60, Holding), 4);
+                g.DrawEllipse(p, r);
 
-                p = new Pen(Color.FromArgb(75, Holding), 2);
-                g.DrawEllipse(p, (float)(0.15 * this.Width), (float)(0.15 * this.Height), (float)(0.7 * this.Width), (float)(this.Height * 0.7));
-
-                p = new Pen(Color.FromArgb(85, Holding), 1);
-                g.DrawEllipse(p, (float)(0.15 * this.Width), (float)(0.15 * this.Height), (float)(0.7 * this.Width), (float)(this.Height * 0.7));
+                p = new Pen(Color.FromArgb(80, Holding), 2);
+                g.DrawEllipse(p, r);
 
                 b.Dispose();
                 p.Dispose();

@@ -143,15 +143,6 @@
     <None Include="Resources\Button_CloseTab_MouseOver.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Button_Italic.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Button_Underline.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Button_Bold.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Button_Minimize.png" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +162,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Caption_Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Font_Bold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Font_Bold_Active.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Font_Italic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Font_Italic_Actived.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Font_Underline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Font_Underline_active.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Confirmation.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

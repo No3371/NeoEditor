@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Icon = new System.Windows.Forms.PictureBox();
             this.PopupTimer = new System.Windows.Forms.Timer(this.components);
             this.MoveOutTimer = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Icon)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -47,15 +47,15 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "This is a notification.";
             // 
-            // pictureBox1
+            // Icon
             // 
-            this.pictureBox1.Image = global::NeoEditor.Properties.Resources.Alert;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(60, 36);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.Icon.Image = global::NeoEditor.Properties.Resources.Alert;
+            this.Icon.Location = new System.Drawing.Point(0, 0);
+            this.Icon.Name = "Icon";
+            this.Icon.Size = new System.Drawing.Size(60, 36);
+            this.Icon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.Icon.TabIndex = 0;
+            this.Icon.TabStop = false;
             // 
             // PopupTimer
             // 
@@ -73,10 +73,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.OrangeRed;
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.Icon);
             this.Name = "NotificationBar";
             this.Size = new System.Drawing.Size(1040, 36);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Icon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -84,7 +84,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox Icon;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer PopupTimer;
         private System.Windows.Forms.Timer MoveOutTimer;

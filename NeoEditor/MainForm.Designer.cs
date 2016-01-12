@@ -111,11 +111,13 @@
             this.RTX.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.RTX.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.RTX.ForeColor = System.Drawing.Color.Silver;
+            this.RTX.ImeMode = System.Windows.Forms.ImeMode.On;
             this.RTX.Location = new System.Drawing.Point(10, 10);
             this.RTX.Name = "RTX";
             this.RTX.Size = new System.Drawing.Size(1020, 676);
             this.RTX.TabIndex = 4;
             this.RTX.Text = "";
+            this.RTX.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RTX_MouseClick);
             this.RTX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RTX_KeyDown);
             this.RTX.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RTX_KeyPress);
             // 
