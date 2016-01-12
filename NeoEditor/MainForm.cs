@@ -53,6 +53,7 @@ namespace NeoEditor
         {
             tabSidebar.Mainform = this;
             PTnotification = new Point(2, this.Height - 36);
+            new Loader().Show(this);
         }
 
         private void MainPanel_Paint(object sender, PaintEventArgs e)
